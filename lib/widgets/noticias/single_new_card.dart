@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hostur_v2/models/_models.dart';
 
@@ -161,13 +162,15 @@ class _SigleNewCardImage extends StatelessWidget {
       child: ClipRRect(
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-        child: FadeInImage(
-            placeholder: const AssetImage('assets/pacman_loading.gif'),
-            placeholderFit: BoxFit.cover,
+        child: CachedNetworkImage(
+            errorWidget: (context, url, error) =>
+                const Image(image: AssetImage('assets/pacman_loading.gif')),
+            placeholder: (context, url) =>
+                const Image(image: AssetImage('assets/pacman_loading.gif')),
             height: 130,
             width: double.infinity,
             fit: BoxFit.cover,
-            image: NetworkImage(noticia.img)),
+            imageUrl: noticia.img),
       ),
     );
   }
