@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hostur_v2/provider/noticias_provider.dart';
+import 'package:hostur_v2/screens/noticias_single_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/_screens.dart';
@@ -39,7 +40,10 @@ class MyApp extends StatelessWidget {
               iconTheme: IconThemeData(color: kPrimaryColor),
               elevation: 0,
               backgroundColor: const Color(0xFFFAFAFA))),
-      routes: {'noticias': (context) => const NoticiasScreen()},
+      routes: {
+        'noticias': (context) => const NoticiasScreen(),
+        'noticiaSingle': (context) => const NoticiasSingleScreen()
+        },
     );
   }
 }

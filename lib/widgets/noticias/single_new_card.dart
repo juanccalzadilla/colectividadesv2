@@ -8,36 +8,40 @@ class SingleNewCard extends StatelessWidget {
   const SingleNewCard({super.key, required this.noticia});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color:
-                Colors.grey.withOpacity(0.1), // Color y opacidad de la sombra
-            blurRadius: 4, // Radio del desenfoque de la sombra
-            spreadRadius: 1, // Distancia de expansión de la sombra
-            offset:
-                const Offset(0, 2), // Desplazamiento de la sombra en eje x e y
-          ),
-        ],
-      ),
-      // height: size.height * 0.3,
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _SigleNewCardImage(
-            noticia: noticia,
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          _SingleNewCardBody(
-            noticia: noticia,
-          )
-        ],
+    return GestureDetector(
+      onTap: () =>
+          Navigator.pushNamed(context, 'noticiaSingle', arguments: noticia),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color:
+                  Colors.grey.withOpacity(0.1), // Color y opacidad de la sombra
+              blurRadius: 4, // Radio del desenfoque de la sombra
+              spreadRadius: 1, // Distancia de expansión de la sombra
+              offset: const Offset(
+                  0, 2), // Desplazamiento de la sombra en eje x e y
+            ),
+          ],
+        ),
+        // height: size.height * 0.3,
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _SigleNewCardImage(
+              noticia: noticia,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            _SingleNewCardBody(
+              noticia: noticia,
+            )
+          ],
+        ),
       ),
     );
   }
@@ -162,15 +166,18 @@ class _SigleNewCardImage extends StatelessWidget {
       child: ClipRRect(
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-        child: CachedNetworkImage(
-            errorWidget: (context, url, error) =>
-                const Image(image: AssetImage('assets/pacman_loading.gif')),
-            placeholder: (context, url) =>
-                const Image(image: AssetImage('assets/pacman_loading.gif')),
-            height: 130,
-            width: double.infinity,
-            fit: BoxFit.cover,
-            imageUrl: noticia.img),
+        child: Hero(
+          tag: 'img-noticia-${noticia.idNoticia}',
+          child: CachedNetworkImage(
+              errorWidget: (context, url, error) =>
+                  const Image(image: AssetImage('assets/pacman_loading.gif')),
+              placeholder: (context, url) =>
+                  const Image(image: AssetImage('assets/pacman_loading.gif')),
+              height: 130,
+              width: double.infinity,
+              fit: BoxFit.cover,
+              imageUrl: noticia.img),
+        ),
       ),
     );
   }

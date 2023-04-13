@@ -63,4 +63,7 @@ class _NoticiasContenidoState extends State<_NoticiasContenido> {
               noticia: noticiasList.noticiasList[index],
             ));
   }
+
+
 }
+
