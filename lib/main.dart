@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hostur_v2/provider/desafios_provider.dart';
 import 'package:hostur_v2/provider/noticias_provider.dart';
+import 'package:hostur_v2/provider/recetas_provider.dart';
+import 'package:hostur_v2/provider/ui_provider.dart';
 import 'package:hostur_v2/screens/noticias_single_screen.dart';
-import 'package:provider/provider.dart';
+import 'package:hostur_v2/screens/recetas_single_screen.dart';
 
 import 'screens/_screens.dart';
 
@@ -18,6 +21,9 @@ class AppState extends StatelessWidget {
           create: (_) => NoticiasProvider(),
           lazy: false,
         ),
+        ChangeNotifierProvider(create: (_) => UIProvider()),
+        ChangeNotifierProvider(create: (_) => RecetasProvider()),
+        ChangeNotifierProvider(create: (_) => DesafiosProvider())
       ],
       child: const MyApp(),
     );
@@ -35,15 +41,18 @@ class MyApp extends StatelessWidget {
       title: 'Hostur V2',
       debugShowCheckedModeBanner: false,
       initialRoute: 'noticias',
-      theme: ThemeData.light().copyWith(
-          appBarTheme: AppBarTheme(
-              iconTheme: IconThemeData(color: kPrimaryColor),
-              elevation: 0,
-              backgroundColor: const Color(0xFFFAFAFA))),
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: Colors.purple,
+      ),
       routes: {
-        'noticias': (context) => const NoticiasScreen(),
-        'noticiaSingle': (context) => const NoticiasSingleScreen()
-        },
+        'noticias': (context) => const MainViewScreen(),
+        'noticiaSingle': (context) => const NoticiasSingleScreen(),
+        'recetas': (context) => const RecetasScreen(),
+        'recetaSingle': (context) => const RecetasSingleScreen(),
+        'desafios': (context) => const DesafiosScreen(),
+        'desafiosSingle': (context) => const DesafiosSingleScreen()
+      },
     );
   }
 }

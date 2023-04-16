@@ -4,12 +4,87 @@ import '../widgets/_widgets.dart';
 
 class NoticiasScreen extends StatelessWidget {
   const NoticiasScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    final appTheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
-        leading: const Icon(Icons.camera),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: FilledButton.tonal(
+                onPressed: () {
+                  showModalBottomSheet(
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) => Container(
+                      padding: const EdgeInsets.all(30),
+                      height: size.height * 0.75,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(children: [
+                          Image.asset('assets/Hosturcitos_Cubiertos.png',
+                              height: 100),
+                          Text('Hostur Contigo',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: appTheme.primary,
+                                  fontWeight: FontWeight.bold)),
+                          Text('Acceso para padres',
+                              style: TextStyle(
+                                  fontSize: 15, color: appTheme.secondary)),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: const InputDecoration(
+                                hintText: 'Email',
+                                label: Text('Email'),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(10),
+                                        topRight: Radius.circular(10)))),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          TextFormField(
+                            obscureText: true,
+                            decoration: const InputDecoration(
+                                hintText: 'Contraseña',
+                                label: Text('Contraseña'),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(10),
+                                        topRight: Radius.circular(10)))),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          FilledButton.tonal(
+                              style: ButtonStyle(
+                                  minimumSize: MaterialStateProperty.all(
+                                      Size(size.width, 50))),
+                              onPressed: () {},
+                              child: Text(
+                                'Entrar',
+                                style: TextStyle(color: appTheme.secondary),
+                              ))
+                        ]),
+                      ),
+                    ),
+                  );
+                },
+                child :  Icon(
+                  Icons.account_circle_outlined,
+                  size: 33,
+                  color:  appTheme.primary,
+                )),
+          ),
+        ],
         title: const Image(
             width: 100,
             height: 100,
@@ -17,10 +92,18 @@ class NoticiasScreen extends StatelessWidget {
             image: AssetImage('assets/logo_superior.png')),
         centerTitle: true,
       ),
-      bottomNavigationBar: const CustomBottomBar(),
-      body: Stack(children: [
-        // const Background(),
-        _NoticiasContenido(),
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Text(
+            '#HosturNoticiero',
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(color: Colors.black),
+          ),
+        ),
+        Expanded(child: _NoticiasContenido()),
       ]),
     );
   }
@@ -63,7 +146,4 @@ class _NoticiasContenidoState extends State<_NoticiasContenido> {
               noticia: noticiasList.noticiasList[index],
             ));
   }
-
-
 }
-

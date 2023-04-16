@@ -5,23 +5,22 @@ import 'package:hostur_v2/models/_models.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
-class NoticiasSingleScreen extends StatelessWidget {
-  const NoticiasSingleScreen({Key? key}) : super(key: key);
+class DesafiosSingleScreen extends StatelessWidget {
+  const DesafiosSingleScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final Noticia noticia =
-        ModalRoute.of(context)?.settings.arguments as Noticia;
+    final Desafio desafio = ModalRoute.of(context)?.settings.arguments as Desafio;
     return Scaffold(
       body: SafeArea(
         bottom: false,
         child: Stack(
           children: [
-            _DetailedImage(size: size, noticia: noticia),
+            _DetailedImage(size: size, desafio: desafio),
             _BottomSheet(
               size: size,
-              noticia: noticia,
+              desafio: desafio,
             )
           ],
         ),
@@ -33,15 +32,15 @@ class NoticiasSingleScreen extends StatelessWidget {
 class _BottomSheet extends StatelessWidget {
   const _BottomSheet({
     required this.size,
-    required this.noticia,
+    required this.desafio,
   });
 
   final Size size;
-  final Noticia noticia;
+  final Desafio desafio;
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> adjuntosNoticia = noticia.getAdjuntos;
+    final List<Map<String, String>> adjuntosReceta = desafio.getAdjuntos;
     return Positioned(
         bottom: 0,
         child: ElasticIn(
@@ -58,20 +57,13 @@ class _BottomSheet extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        noticia.titulo,
+                        desafio.titulo,
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
                       const SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        noticia.subTitulo,
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      HtmlWidget(noticia.texto,
+                      HtmlWidget(desafio.texto,
                           onTapUrl: (p0) =>
                               launchInBrowser(p0), //p0.sources.first.url
                           onTapImage: (p0) =>
@@ -79,11 +71,11 @@ class _BottomSheet extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      if (adjuntosNoticia.isNotEmpty)
-                        _AdjuntosNoticia(
+                      if (adjuntosReceta.isNotEmpty)
+                        _AdjuntosReceta(
                             size: size,
-                            adjuntosNoticia: adjuntosNoticia,
-                            noticia: noticia)
+                            adjuntosReceta: adjuntosReceta,
+                            desafio: desafio)
                     ],
                   ),
                 ),
@@ -92,16 +84,16 @@ class _BottomSheet extends StatelessWidget {
   }
 }
 
-class _AdjuntosNoticia extends StatelessWidget {
-  const _AdjuntosNoticia({
+class _AdjuntosReceta extends StatelessWidget {
+  const _AdjuntosReceta({
     required this.size,
-    required this.adjuntosNoticia,
-    required this.noticia,
+    required this.adjuntosReceta,
+    required this.desafio,
   });
 
   final Size size;
-  final List<Map<String, String>> adjuntosNoticia;
-  final Noticia noticia;
+  final List<Map<String, String>> adjuntosReceta;
+  final Desafio desafio;
 
   @override
   Widget build(BuildContext context) {
@@ -114,11 +106,11 @@ class _AdjuntosNoticia extends StatelessWidget {
           height: 50,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: adjuntosNoticia.length,
+            itemCount: adjuntosReceta.length,
             itemBuilder: (context, index) => IconButton(
                 onPressed: () =>
-                    launchInBrowser(adjuntosNoticia[index]['enlace']),
-                icon: Icon(noticia.getIcono(adjuntosNoticia[index]['tipo']),
+                    launchInBrowser(adjuntosReceta[index]['enlace']),
+                icon: Icon(desafio.getIcono(adjuntosReceta[index]['tipo']),
                     size: 50)),
           ),
         ),
@@ -130,11 +122,11 @@ class _AdjuntosNoticia extends StatelessWidget {
 class _DetailedImage extends StatelessWidget {
   const _DetailedImage({
     required this.size,
-    required this.noticia,
+    required this.desafio,
   });
 
   final Size size;
-  final Noticia noticia;
+  final Desafio desafio;
 
   @override
   Widget build(BuildContext context) {
@@ -147,12 +139,12 @@ class _DetailedImage extends StatelessWidget {
             height: size.height - 200,
             width: size.width,
             child: Hero(
-              tag: 'img-noticia-${noticia.idNoticia}',
+              tag: 'img-desafio-${desafio.idDesafio}',
               child: AspectRatio(
                 aspectRatio: 1 / 1,
                 child: CachedNetworkImage(
                   alignment: Alignment.center,
-                  imageUrl: noticia.img,
+                  imageUrl: desafio.img,
                   fit: BoxFit.cover,
                   errorWidget: (context, url, error) => const Image(
                       image: AssetImage('assets/pacman_loading.gif')),

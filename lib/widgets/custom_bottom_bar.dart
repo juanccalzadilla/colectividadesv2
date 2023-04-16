@@ -1,27 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:hostur_v2/provider/noticias_provider.dart';
+import 'package:hostur_v2/provider/ui_provider.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-class CustomBottomBar extends StatefulWidget {
-  const CustomBottomBar({
-    super.key,
-  });
+class CustomBottomBar extends StatelessWidget {
+  const CustomBottomBar({super.key});
 
-  @override
-  State<CustomBottomBar> createState() => _CustomBottomBarState();
-}
-
-class _CustomBottomBarState extends State<CustomBottomBar> {
-  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return SalomonBottomBar(
       onTap: (p0) {
-        setState(() {
-          _currentIndex = p0;
-        });
+        final uiProvider = Provider.of<UIProvider>(context, listen: false);
+        uiProvider.selectedMenuOpt = p0;
       },
-      
-      currentIndex: _currentIndex,
+      currentIndex: Provider.of<UIProvider>(context).selectedMenuOpt,
       items: [
         /// Home
         SalomonBottomBarItem(

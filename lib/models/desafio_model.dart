@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class Noticia {
-  Noticia({
-    required this.idNoticia,
+class Desafio {
+  Desafio({
+    required this.idDesafio,
     required this.img,
     required this.titulo,
     required this.subTitulo,
@@ -14,14 +14,9 @@ class Noticia {
     required this.enlace4,
     required this.enlace5,
     required this.enlace6,
-    required this.fechaPublicacion,
-    required this.oculta,
-    required this.impresiones,
-  }) {
-    addAdjuntos();
-  }
+  });
 
-  int idNoticia;
+  int idDesafio;
   String img;
   String titulo;
   String subTitulo;
@@ -33,14 +28,8 @@ class Noticia {
   String enlace4;
   String enlace5;
   String enlace6;
-  String fechaPublicacion;
-  int oculta;
-  int impresiones;
-  int nueva = 1;
 
   List<Map<String, String>> adjuntos = [];
-
-  //Por cada uno de los enlaces, lo añadimos a la lista de adjuntos segun su extension y devolvemos un icono dependiendo de lo que sea
 
   void addAdjuntos() {
     if (enlace1 != '') {
@@ -87,26 +76,23 @@ class Noticia {
   }
 
   get getAdjuntos => adjuntos;
-
-  factory Noticia.fromJson(Map<String, dynamic> json) => Noticia(
-      idNoticia: json["IdNoticia"],
-      img: json["img"],
-      titulo: json["titulo"],
-      subTitulo: json["subTitulo"],
-      fecha: DateTime.parse(json["fecha"]),
-      texto: json["texto"],
-      enlace1: json["enlace1"],
-      enlace2: json["enlace2"],
-      enlace3: json["enlace3"],
-      enlace4: json["enlace4"],
-      enlace5: json["enlace5"],
-      enlace6: json["enlace6"],
-      fechaPublicacion: json["fechaPublicacion"],
-      oculta: json["oculta"],
-      impresiones: json["impresiones"]);
+  factory Desafio.fromJson(Map<String, dynamic> json) => Desafio(
+        idDesafio: json["IdDesafio"],
+        img: json["img"],
+        titulo: json["titulo"],
+        subTitulo: json["subTitulo"],
+        fecha: DateTime.parse(json["fecha"]),
+        texto: json["texto"],
+        enlace1: json["enlace1"],
+        enlace2: json["enlace2"],
+        enlace3: json["enlace3"],
+        enlace4: json["enlace4"],
+        enlace5: json["enlace5"],
+        enlace6: json["enlace6"],
+      );
 
   Map<String, dynamic> toJson() => {
-        "IdNoticia": idNoticia,
+        "IdDesafio": idDesafio,
         "img": img,
         "titulo": titulo,
         "subTitulo": subTitulo,
@@ -119,8 +105,5 @@ class Noticia {
         "enlace4": enlace4,
         "enlace5": enlace5,
         "enlace6": enlace6,
-        "fechaPublicacion": fechaPublicacion,
-        "oculta": oculta,
-        "impresiones": impresiones,
       };
 }
