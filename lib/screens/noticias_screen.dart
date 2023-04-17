@@ -11,6 +11,7 @@ class NoticiasScreen extends StatelessWidget {
     final appTheme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -19,69 +20,14 @@ class NoticiasScreen extends StatelessWidget {
                   showModalBottomSheet(
                     isScrollControlled: true,
                     context: context,
-                    builder: (context) => Container(
-                      padding: const EdgeInsets.all(30),
-                      height: size.height * 0.75,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(children: [
-                          Image.asset('assets/Hosturcitos_Cubiertos.png',
-                              height: 100),
-                          Text('Hostur Contigo',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: appTheme.primary,
-                                  fontWeight: FontWeight.bold)),
-                          Text('Acceso para padres',
-                              style: TextStyle(
-                                  fontSize: 15, color: appTheme.secondary)),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          TextFormField(
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: const InputDecoration(
-                                hintText: 'Email',
-                                label: Text('Email'),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10),
-                                        topRight: Radius.circular(10)))),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          TextFormField(
-                            obscureText: true,
-                            decoration: const InputDecoration(
-                                hintText: 'Contraseña',
-                                label: Text('Contraseña'),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10),
-                                        topRight: Radius.circular(10)))),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          FilledButton.tonal(
-                              style: ButtonStyle(
-                                  minimumSize: MaterialStateProperty.all(
-                                      Size(size.width, 50))),
-                              onPressed: () {},
-                              child: Text(
-                                'Entrar',
-                                style: TextStyle(color: appTheme.secondary),
-                              ))
-                        ]),
-                      ),
-                    ),
+                    builder: (context) =>
+                        _LoginModal(size: size, appTheme: appTheme),
                   );
                 },
-                child :  Icon(
+                child: Icon(
                   Icons.account_circle_outlined,
                   size: 33,
-                  color:  appTheme.primary,
+                  color: appTheme.primary,
                 )),
           ),
         ],
@@ -105,6 +51,99 @@ class NoticiasScreen extends StatelessWidget {
         ),
         Expanded(child: _NoticiasContenido()),
       ]),
+    );
+  }
+}
+
+class _LoginModal extends StatelessWidget {
+  const _LoginModal({
+    required this.size,
+    required this.appTheme,
+  });
+
+  final Size size;
+  final ColorScheme appTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(30),
+      height: size.height * 0.8,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(children: [
+          Image.asset('assets/Hosturcitos_Cubiertos.png', height: 100),
+          Text('Hostur Contigo',
+              style: TextStyle(
+                  fontSize: 20,
+                  color: appTheme.primary,
+                  fontWeight: FontWeight.bold)),
+          Text('Acceso para padres',
+              style: TextStyle(fontSize: 15, color: appTheme.secondary)),
+          const SizedBox(
+            height: 10,
+          ),
+          TextFormField(
+            keyboardType: TextInputType.emailAddress,
+            decoration: const InputDecoration(
+                hintText: 'Email',
+                label: Text('Email'),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        topRight: Radius.circular(10)))),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          TextFormField(
+            obscureText: true,
+            decoration: const InputDecoration(
+                hintText: 'Contraseña',
+                label: Text('Contraseña'),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        topRight: Radius.circular(10)))),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          FilledButton.tonal(
+              style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(Size(size.width, 50))),
+              onPressed: () {},
+              child: Text(
+                'Entrar',
+                style: TextStyle(color: appTheme.secondary),
+              )),
+
+              const SizedBox(height: 20,),
+              const Text('¿Olvidaste la contraseña?'),
+              const SizedBox(height: 10,),
+
+              FilledButton.tonal(
+              style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(Size(size.width, 50))),
+              onPressed: () {},
+              child: Text(
+                'Recuperar contraseña',
+                style: TextStyle(color: appTheme.secondary),
+              )),
+              const SizedBox(height: 20,),
+              const Text('Solicitar acceso'),
+              const SizedBox(height: 10,),
+
+              FilledButton.tonal(
+              style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(Size(size.width, 50))),
+              onPressed: () {},
+              child: Text(
+                'Solicitar',
+                style: TextStyle(color: appTheme.secondary),
+              ))
+        ]),
+      ),
     );
   }
 }
